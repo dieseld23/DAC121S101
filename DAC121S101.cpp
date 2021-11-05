@@ -38,12 +38,13 @@
  */
 DAC121::DAC121(uint8_t io_pin_cs) {
     cs = io_pin_cs;
-}
+   }
 
 /*
  * This method initializes the SPI port and sets default state to normal mode and data to an initial setpoint;
  */
-void DAC121::begin(uint8_t mode, uint16_t initData) {
+void DAC121::begin(uint8_t mode, uint16_t initData, float refVolts) {
+    vRef = refVolts;
     SPI.begin();
     modeSet = mode;
     setData(initData);
@@ -62,8 +63,8 @@ void DAC121::setPowerDownMode(uint8_t mode) {
  * This sets the DAC to your preferred voltage using a given reference voltage (read from an IC's analog input) so it can set the step as close to your given set voltage
  */
 
-void DAC121::setVoltage(float Vref, float setVolts) {
-    uint16_t digiVolts = round((setVolts * 4096) / Vref);
+void DAC121::setVoltage(float setVolts, float vRef) {
+    uint16_t digiVolts = round((setVolts * 4096) / vRef);
     setData(digiVolts);
 }
 

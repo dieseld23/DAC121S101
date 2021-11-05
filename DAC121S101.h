@@ -52,7 +52,7 @@ class DAC121 {
     public:
         DAC121(uint8_t io_pin_cs);                                 ///< Constructor
 
-        void begin(uint8_t mode, uint16_t initData);
+        void begin(uint8_t mode, uint16_t initData, float refVolts);
       
         void setData(uint16_t data);
         void setVoltage(float Vref, float setVolts);
@@ -64,6 +64,7 @@ class DAC121 {
     private:
         uint8_t cs;                                 ///< Chip select pin (choose one)
         uint8_t modeSet;
+        float vRef = 3;
     
 };
 
