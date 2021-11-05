@@ -71,7 +71,16 @@ void DAC121::setVoltage(float Vref, float setVolts) {
  * This sends the data via SPI. Takes the mode previously set, and data and sends it.
  */
 
-void DAC121::setData(uint16_t data) {    
+void DAC121::setData(uint16_t data) {  
+
+	// If the setPt is out of range, clamp it
+	if (data > 4095) {
+		data = 4095;
+	} else if (data < 0) {
+		data = 0;
+	}
+
+
     uint16_t maskedMode = (modeSet << 12) & PDM_MASK;
 	uint16_t maskedData = data & DATA_MASK;
 
