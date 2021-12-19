@@ -86,20 +86,19 @@ void DAC121::setData(uint16_t data) {
 	uint16_t maskedData = data & DATA_MASK;
 
     uint16_t sendData = maskedMode | maskedData;     
-
+  
     uint8_t byteLow = sendData & 0xff;
     uint8_t byteHigh = (sendData >> 8);
-
-    SPI.beginTransaction(SPISettings(SCLK, MSBFIRST, SPI_MODE1));
+     SPI.beginTransaction(SPISettings(SCLK, MSBFIRST, SPI_MODE3));
     
     // Send config
     digitalWrite(cs, LOW);
-    delayMicroseconds(10);
+    delay(100);
     SPI.transfer(byteHigh);
     SPI.transfer(byteLow);
-   
+    delay(5);
     digitalWrite(cs, HIGH);
-    delayMicroseconds(10);
+    delay(100);
     
     SPI.endTransaction();
 

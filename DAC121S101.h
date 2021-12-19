@@ -35,10 +35,10 @@
 #include <SPI.h>
 
 
-#define DATA_MASK       0b1111111111111
+#define DATA_MASK       0b0000111111111111
 #define PDM_MASK		0b11 << 12
-#define PDM_BIT_1_POS	13
-#define PDM_BIT_0_POS	12
+#define PDM_BIT_1_POS	14
+#define PDM_BIT_0_POS	13
 
 #define PDM_NORMAL		0b00
 #define PDM_2_5K_GND	0b01
@@ -53,12 +53,12 @@ class DAC121 {
         DAC121(uint8_t io_pin_cs);                                 ///< Constructor
 
         void begin(uint8_t mode, uint16_t initData, float refVolts);
-      
+
         void setData(uint16_t data);
-        void setVoltage(float Vref, float setVolts);
+        void setVoltage(float setVolts, float Vref);
         void setPowerDownMode(uint8_t mode);      
         // Bit constant
-        const long int SCLK        = 10000000;       ///< DAC121 SCLK frequency: 30000000 Hz Maximum for DAC121 (30Mhz)
+        const long int SCLK        = 1000000;       ///< DAC121 SCLK frequency: 30000000 Hz Maximum for DAC121 (30Mhz)
 
        
     private:
