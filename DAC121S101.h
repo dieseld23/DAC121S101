@@ -58,7 +58,7 @@ class DAC121 {
         void setVoltage(float setVolts, float Vref);
         void setPowerDownMode(uint8_t mode);      
         // Bit constant
-        const long int SCLK        = 1000000;       ///< DAC121 SCLK frequency: 30000000 Hz Maximum for DAC121 (30Mhz)
+        const long int SCLK        = 10000000;       ///< DAC121 SCLK frequency: 30000000 Hz Maximum for DAC121 (30Mhz)
 
        
     private:
