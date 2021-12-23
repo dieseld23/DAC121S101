@@ -64,6 +64,15 @@ void DAC121::setPowerDownMode(uint8_t mode) {
  */
 
 void DAC121::setVoltage(float setVolts, float vRef) {
+ /*    Serial.print("setVolts: ");
+    Serial.println(setVolts,DEC);
+        Serial.print("vRef: ");
+    Serial.println(vRef,DEC);
+        Serial.print("setVolts: ");
+    Serial.println(setVolts,DEC);
+    
+        Serial.print("digiVolts: ");
+    Serial.println(digiVolts,DEC);*/
     uint16_t digiVolts = round((setVolts * 4096) / vRef);
     setData(digiVolts);
 }
@@ -81,24 +90,29 @@ void DAC121::setData(uint16_t data) {
 		data = 0;
 	}
 
+    //uint16_t maskedMode = (modeSet << 12) & PDM_MASK;
+	//uint16_t maskedData = data & DATA_MASK;
 
-    uint16_t maskedMode = (modeSet << 12) & PDM_MASK;
-	uint16_t maskedData = data & DATA_MASK;
-
-    uint16_t sendData = maskedMode | maskedData;     
-  
+    //uint16_t sendData = maskedMode | maskedData;     
+    uint16_t sendData = data;
     uint8_t byteLow = sendData & 0xff;
     uint8_t byteHigh = (sendData >> 8);
-     SPI.beginTransaction(SPISettings(SCLK, MSBFIRST, SPI_MODE3));
+/*    Serial.print("byte Low: 0x");
+    Serial.println(byteLow,BIN);
+    Serial.print("byte High: 0x");
+    Serial.println(byteHigh,BIN);
+    Serial.print("sendData: 0x");
+    Serial.println(sendData,BIN);*/
+    SPI.beginTransaction(SPISettings(SCLK, MSBFIRST, SPI_MODE1));
     
     // Send config
     digitalWrite(cs, LOW);
-    delay(100);
+    delayMicroseconds(10);
     SPI.transfer(byteHigh);
     SPI.transfer(byteLow);
-    delay(5);
+    delayMicroseconds(5);
     digitalWrite(cs, HIGH);
-    delay(100);
+    delayMicroseconds(10);
     
     SPI.endTransaction();
 
