@@ -111,9 +111,7 @@ void DAC121::setData(uint16_t data) {
     SPI.transfer(byteHigh);
     SPI.transfer(byteLow);
     delayMicroseconds(5);
-    digitalWrite(cs, HIGH);
-    delayMicroseconds(10);
-    
+    digitalWrite(cs, HIGH);    
     SPI.endTransaction();
 
 }
